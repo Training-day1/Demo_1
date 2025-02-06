@@ -1,0 +1,5 @@
+name: demo-action
+
+on:
+  push:
+    branches:main
