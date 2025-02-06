@@ -1,32 +1,35 @@
+,
 name: demo-action
 
 on:
-  push:
-    branches: main
-    
+  # push:
+  #   branches: main
+
   issues:
-      types: opened
+    types: opened
+
   workflow_dispatch:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-     - uses: actions/checkout@v4
-     - name: run a sample action
-       run: echo Hello world
+    steps: 
+      - uses: actions/checkout@v4
+      - name: sample-run
+        run: echo Hello World
 
-     - name: upload artifacts
-       uses: actions/upload-artifact@v4
-       with:
-         name: my-artifacts
-         path: $({github.workspace})
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: ${{github.workspace}}
+
   deploy:
-      runs-on: ubuntu-latest
-      needs: build
-      steps:
-       - name: Download artifacts
-         uses: actions/download-artifact@v4
-         with:
-           name: my-artifacts
-           run: ls -R
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+          run: ls -R
